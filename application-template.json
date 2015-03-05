@@ -22,7 +22,7 @@
       },
       "parameters": {
         "output": {
-          "tag": "test",
+          "tag": "latest-ci",
           "to": {
             "name": "camel-cdi"
           }
@@ -35,7 +35,7 @@
         },
         "strategy": {
           "stiStrategy": {
-            "image": "atos/camel-cdi"
+            "image": "fabric8/java-main"
           },
           "type": "STI"
         }
