@@ -1,0 +1,63 @@
+{
+  "annotations": {
+    "description": "This example shows how to create a simple ruby application in openshift origin v3"
+  },
+  "apiVersion": "v1beta1",
+  "items": [
+    {
+      "apiVersion": "v1beta1",
+      "kind": "ImageRepository",
+      "metadata": {
+        "name": "camel-cdi"
+      }
+    },
+    {
+      "apiVersion": "v1beta1",
+      "kind": "BuildConfig",
+      "metadata": {
+        "labels": {
+          "name": "camel-cdi-build"
+        },
+        "name": "camel-cdi-build"
+      },
+      "parameters": {
+        "output": {
+          "tag": "test",
+          "to": {
+            "name": "camel-cdi"
+          }
+        },
+        "source": {
+          "git": {
+            "uri": "https://github.com/davidatkins/camel-cdi"
+          },
+          "type": "Git"
+        },
+        "strategy": {
+          "stiStrategy": {
+            "image": "atos/camel-cdi"
+          },
+          "type": "STI"
+        }
+      },
+      "triggers": [
+        {
+          "github": {
+            "secret": "secret101"
+          },
+          "type": "github"
+        },
+        {
+          "generic": {
+            "secret": "secret101"
+          },
+          "type": "generic"
+        }
+      ]
+    }
+  ],
+  "kind": "Template",
+  "metadata": {
+    "name": "camel-cdi"
+  }
+}

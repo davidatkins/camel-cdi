@@ -1,0 +1,62 @@
+{
+  "id": "camel-cdi-jenkins-config",
+  "kind": "Config",
+  "apiVersion": "v1beta1",
+  "name": "camel-cdi-jenkins-config",
+  "description": "Configuration for jenkins",
+  "items": [
+    {
+      "apiVersion": "v1beta2",
+      "containerPort": 8080,
+      "creationTimestamp": null,
+      "id": "camelcdijenkins",
+      "kind": "Service",
+      "port": 5002,
+      "selector": {
+        "component": "camelcdijenkins"
+      }
+    },
+    {
+      "id": "camel-cdi-jenkins-controller",
+      "kind": "ReplicationController",
+      "apiVersion": "v1beta1",
+      "desiredState": {
+        "replicas": 1,
+        "replicaSelector": {
+          "component": "camelcdijenkins"
+        },
+        "podTemplate": {
+          "desiredState": {
+            "manifest": {
+              "version": "v1beta1",
+              "id": "camelcdijenkinsPod",
+              "containers": [
+                {
+                  "name": "camel-cdi-jenkins-container",
+                  "image": "${DOCKER_REGISTRY}/atos/jenkins:1.0-SNAPSHOT",
+                  "imagePullPolicy": "PullAlways",
+                  "env": [
+                  ],
+                  "ports": [
+                    {
+                      "containerPort": 8778
+                    },
+                    {
+                      "containerPort": 8080
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "labels": {
+            "component": "camelcdijenkins"
+          }
+        }
+      },
+      "labels": {
+        "component": "camelcdijenkins"
+      }
+    }
+  ]
+}
