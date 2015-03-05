@@ -1,5 +1,7 @@
 STI Build
 
+ sti build https://github.com/davidatkins/camel-cdi.git fabric8/java-main atos/camel-cdi --loglevel=3 --env JAVA_MAIN=org.apache.camel.cdi.Main
+
     sti build https://github.com/davidatkins/camel-cdi.git fabric8/java-main atos/camel-cdi --loglevel=3
 
 Then run
@@ -7,6 +9,7 @@ Then run
     docker run -it -e "JAVA_MAIN=org.apache.camel.cdi.Main" atos/camel-cdi
 
 TODO: set JAVA_MAIN in default image
+TODO: create a private version of this project and document
 
 To save job from jenkins into job.xml, can do via REST API:
 
