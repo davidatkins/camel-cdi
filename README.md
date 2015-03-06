@@ -4,11 +4,21 @@ This is a custom Camel/CDI example for testing a deployment pipeline using Fabri
 
 # Usage
 
-1. Setup an OpenShift instance, see https://github.com/atosorigin/blueprint-openshift/GettingStarted.md
-2. Build and push an instance of the [custom Jenkins Image](https://github.com/atosorigin/blueprint-openshift/tree/master/blueprints/jenkins) into your OpenShift instance
-3. Create an instance of the Jenkins Image by running ./install-jenkins.sh
-4. Once that's up and running, create a Jenkins job for this project by running ./install-jenkins-job.sh
-5. Trigger a build job via the Jenkins UI (find the endpoint for the '' service)
+1. Setup an OpenShift instance, see [atos blueprint wiki](https://github.com/atosorigin/blueprint-openshift/GettingStarted.md)
+2. [Create a Jenkins Job](camel-cdi-jenkins/README.md)
+3. Setup OpenShift Build Job by running 
+
+      `install-application-template.sh`
+      
+4. Trigger a build job via the Jenkins UI (find the endpoint for the '' service)
+
+This job will:
+
+* Checkout the code
+* Build the maven project, running any unit tests
+* Trigger an openshift build (defined in the application-template)
+ * This will use STI to build the image, and insert it into the OpenShift Registry
+* Once complete, run the Fabric8 Integration Tests. This will deploy the previously built image to a temporary namespace and run integration tests
 
 # Dev Notes
 
@@ -20,13 +30,13 @@ Since then the Fabric8 guys mentioned a way to access the local docker Daemon as
 
 ## STI
 
-I've used a work-in-progress Fabric8 STI image to get STI working (fabric8/java-main).
+I've used a work-in-progress Fabric8 STI image to get STI working (fabric8/java-main). See [STI page on the Atos blueprint wiki](https://github.com/atosorigin/blueprint-openshift/STI.md) for general information about this.
 
 ### Building Locally (Dev)
 
 If you want to build locally (instead of using an OpenShift build), setup STI (http://www.github.com/openshift/source-to-image) and run the following:
 
- sti build https://github.com/davidatkins/camel-cdi.git fabric8/java-main atos/camel-cdi --loglevel=3
+    sti build https://github.com/davidatkins/camel-cdi.git fabric8/java-main atos/camel-cdi --loglevel=3 --incremental
 
 You can then start the container using:
 

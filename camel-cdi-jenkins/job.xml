@@ -8,8 +8,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/atosorigin/blueprint-openshift</url>
-        <credentialsId>f72871da-b6ae-482b-9012-7042a64f4c97</credentialsId>
+        <url>https://github.com/davidatkins/camel-cdi</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -41,9 +40,41 @@ cat build_props</command>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Maven>
-      <targets>install docker:build</targets>
+      <targets>install</targets>
       <mavenName>3.2.5</mavenName>
-      <pom>blueprints/examples/camel-cdi/pom.xml</pom>
+      <usePrivateRepository>false</usePrivateRepository>
+      <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+      <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+    </hudson.tasks.Maven>
+    <hudson.tasks.Shell>
+      <command>buildId=`osc --server=https://$OPENSHIFT_HOST  --insecure-skip-tls-verify=true start-build camel-cdi-build`
+echo &quot;Started Build with ID &apos;$buildId&apos;&quot;
+echo &quot;Waiting for Build to Complete&quot;
+
+# check that the build test image deployed successfully
+set +e
+buildResult=&quot;Waiting&quot;
+count=0
+attempts=50
+
+while [ $buildResult != &quot;Complete&quot; -a $count -lt $attempts ]; do
+  buildResult=`osc --server=https://$OPENSHIFT_HOST  --insecure-skip-tls-verify=true get builds $buildId | grep $buildId | awk &apos;{ print $3 }&apos;`
+  if [ &quot;$buildResult&quot; != &quot;Complete&quot; ]; then
+    count=$(($count+1))
+    echo &quot;Result was &apos;$buildResult&apos; for Attempt $count/$attempts&quot;
+    sleep 10
+  fi
+done
+set -e
+
+if [ $count -eq $attempts ]; then
+    echo &quot;Failed to reach test deployment&quot;
+    exit 1
+fi</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Maven>
+      <targets>failsafe:integration-test</targets>
+      <mavenName>3.2.5</mavenName>
       <usePrivateRepository>false</usePrivateRepository>
       <settings class="jenkins.mvn.DefaultSettingsProvider"/>
       <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
