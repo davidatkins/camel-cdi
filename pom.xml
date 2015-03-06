@@ -39,7 +39,7 @@
         <module>camel-cdi-itest</module>
         <module>camel-cdi-release</module>
         <module>camel-cdi-routes</module>
-        <module>camel-cdi-jenkins</module>
+        <module>camel-cdi-ci</module>
     </modules>
 
   <properties>
