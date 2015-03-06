@@ -36,7 +36,7 @@ I've used a work-in-progress Fabric8 STI image to get STI working (fabric8/java-
 
 If you want to build locally (instead of using an OpenShift build), setup STI (http://www.github.com/openshift/source-to-image) and run the following:
 
-    sti build https://github.com/davidatkins/camel-cdi.git fabric8/java-main atos/camel-cdi --loglevel=3 --incremental
+    build-sti.sh
 
 You can then start the container using:
 

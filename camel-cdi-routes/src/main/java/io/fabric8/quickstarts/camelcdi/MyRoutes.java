@@ -35,7 +35,11 @@ public class MyRoutes extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
+        System.out.println("Configuring Route");
+
         from("timer://foo?fixedRate=true&period=5000").log("Timer Called");
+
+        System.out.println("Route Configured");
 
     }
 

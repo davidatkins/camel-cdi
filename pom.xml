@@ -64,7 +64,6 @@
       <maven.require.version>3.1.1</maven.require.version>
       <maven.enforcer.plugin.version>1.3.1</maven.enforcer.plugin.version>
 
-
       <!-- the version of the BOM, defining all the dependency versions -->
     <fabric8.version>2.0.30</fabric8.version>
 
@@ -173,7 +172,7 @@
 
     <resources>
       <resource>
-        <directory>camel-cdi-routes/src/main/resources</directory>
+        <directory>src/main/resources</directory>
         <filtering>true</filtering>
       </resource>
     </resources>
@@ -327,15 +326,6 @@
         </configuration>
       </plugin>
 
-      <!-- allows the route to be ran via 'mvn camel:run' -->
-      <plugin>
-        <groupId>org.apache.camel</groupId>
-        <artifactId>camel-maven-plugin</artifactId>
-        <version>${camel.version}</version>
-        <configuration>
-          <useCDI>true</useCDI>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
 
