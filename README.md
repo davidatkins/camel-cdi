@@ -4,12 +4,12 @@ This is a custom Camel/CDI example for testing a deployment pipeline using Fabri
 
 # Usage
 
-1. Setup an OpenShift instance, see [atos blueprint wiki](https://github.com/atosorigin/blueprint-openshift/GettingStarted.md)
-2. [Create a Jenkins Job](camel-cdi-jenkins/README.md)
-3. Setup OpenShift Build Job by running 
+1. Build the project
 
-      `install-application-template.sh`
-      
+      `mvn install`
+
+2. Setup an OpenShift instance, see [atos blueprint wiki](https://github.com/atosorigin/blueprint-openshift/GettingStarted.md)
+3. [Create a Jenkins Instance and Job](camel-cdi-ci/README.md)
 4. Trigger a build job via the Jenkins UI (find the endpoint for the '' service)
 
 This job will:

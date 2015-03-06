@@ -22,7 +22,7 @@
       },
       "parameters": {
         "output": {
-          "tag": "latest-ci",
+          "tag": "latestci",
           "to": {
             "name": "camel-cdi"
           }
@@ -35,25 +35,11 @@
         },
         "strategy": {
           "stiStrategy": {
-            "image": "fabric8/java-main"
+            "image": "atos/java-main"
           },
           "type": "STI"
         }
-      },
-      "triggers": [
-        {
-          "github": {
-            "secret": "secret101"
-          },
-          "type": "github"
-        },
-        {
-          "generic": {
-            "secret": "secret101"
-          },
-          "type": "generic"
-        }
-      ]
+      }
     }
   ],
   "kind": "Template",

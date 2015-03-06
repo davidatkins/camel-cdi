@@ -27,13 +27,20 @@
         <version>9</version>
     </parent>
 
-
+  <groupId>net.atos.blueprint.fabric8</groupId>
   <artifactId>example-camel</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
-  <name>Atos :: UK :: Blueprints :: Fabric8 :: Examples :: Camel CDI</name>
+  <name>Atos :: UK :: Blueprints :: Fabric8 :: Examples :: Camel CDI :: Parent</name>
   <description>Camel route using CDI in a standalone Java Container</description>
+
+    <modules>
+        <module>camel-cdi-itest</module>
+        <module>camel-cdi-release</module>
+        <module>camel-cdi-routes</module>
+        <module>camel-cdi-jenkins</module>
+    </modules>
 
   <properties>
 
@@ -166,7 +173,7 @@
 
     <resources>
       <resource>
-        <directory>src/main/resources</directory>
+        <directory>camel-cdi-routes/src/main/resources</directory>
         <filtering>true</filtering>
       </resource>
     </resources>

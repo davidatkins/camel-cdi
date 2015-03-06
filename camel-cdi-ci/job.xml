@@ -32,6 +32,8 @@
 echo &quot;OPENSHIFT_HOST=$OPENSHIFT_HOST&quot; &gt; build_props
 DOCKER_REGISTRY=`osc get services --server=https://$OPENSHIFT_HOST --insecure-skip-tls-verify=true | grep docker-registry | awk &apos;{print $4}&apos;`
 echo &quot;DOCKER_REGISTRY=$DOCKER_REGISTRY&quot; &gt;&gt; build_props
+echo &quot;KUBERNETES_MASTER=https://$OPENSHIFT_HOST&quot; &gt;&gt; build_props
+echo &quot;KUBERNETES_TRUST_CERT=true&quot; &gt;&gt; build_props
 cat build_props</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@1.90">
