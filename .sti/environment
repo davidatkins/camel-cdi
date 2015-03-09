@@ -1,3 +1,2 @@
 JAVA_MAIN=org.apache.camel.cdi.Main
 OUTPUT_DIR=camel-cdi-routes/target
-MAVEN_ARGS=package dependency:copy-dependencies -DskipTests -e
