@@ -1,0 +1,75 @@
+{
+    "id": "camel-cdi-sonar-config",
+    "kind": "Config",
+    "apiVersion": "v1beta1",
+    "name": "sonarqube-config",
+    "description": "Creates a sonar Server",
+    "items": [
+        {
+            "apiVersion" : "v1beta1",
+            "id":"camel-cdi-sonar-service",
+            "kind":"Service",
+            "port":8080,
+            "containerPort":9000,
+            "selector":{
+                "name":"camelcdisonar"
+            }
+        },
+        {
+            "kind" : "ReplicationController",
+            "id" : "camel-cdi-sonar-controller",
+            "apiVersion" : "v1beta1",
+            "desiredState" : {
+                "replicas" : 1,
+                "replicaSelector" : {
+                    "name" : "camelcdisonar"
+                },
+                "podTemplate" : {
+                    "desiredState" : {
+                        "manifest" : {
+                            "version" : "v1beta1",
+                            "id" : "sonarPod",
+                            "containers" : [
+                              {
+                                "image":"tpires/sonar-server",
+                                "name":"camel-cdi-sonar-server-container",
+                                "env": [
+                                  {
+                                    "name":"DB_PORT_3306_TCP_ADDR",
+                                    "value":"localhost"
+                                  }
+                                ],
+                                "ports":[
+                                    {
+                                        "containerPort":9000,
+                                        "protocol":"TCP"
+                                    }]
+                              },
+                              {
+                                "name": "camel-cdi-sonar-database-container",
+                                "image": "tpires/sonar-mysql",
+                                "env": [
+                                ],
+                                "ports": [
+                                  {
+                                    "containerPort": 3306,
+                                    "protocol":"TCP"
+                                  }
+                                ]
+                              }
+
+                          ]
+
+                        }
+                    },
+                    "labels" : {
+                        "name" : "camelcdisonar"
+                    }
+                }
+            },
+            "labels" : {
+                "name" : "camelcdisonar"
+            }
+        }
+    ]
+}
